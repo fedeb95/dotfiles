@@ -29,5 +29,5 @@ Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%cpu% | %memory% - %swap% | %eth0% - %wlan0% }\
-                    \{ <fc=#ee9a00>%date%</fc>| %battery% | Vol %amixer% | %echo% "
+                    \{ <fc=#ee9a00>%date%</fc>| %battery% | Vol %amixer% "
        }
