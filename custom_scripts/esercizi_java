@@ -1,5 +1,0 @@
-#!/bin/bash
-cartella=$(zenity --entry --title="Cartella" --text="In quale cartella salvare il file? (directory corrente java_esercizi)")
-cd ../../../media/federico/Data/Dropbox/universita/programmazione/java_esercizi/$cartella
-nome=$(zenity --entry --title="Nome" --text="Nome della classe? Verrà creato il .java corrispondente")
-gedit $nome.java &

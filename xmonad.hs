@@ -9,36 +9,20 @@ import XMonad.Util.EZConfig(additionalKeys,additionalKeysP)
 import System.IO
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
+import XMonad.Config.Xfce
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/federico/.xmobarrc"
-    xmproc <- spawnPipe "/usr/bin/xloadimage -onroot -fullscreen -zoom 82 $HOME/Immagini/debian.png"
-    xmproc <- spawnPipe "$HOME/custom_scripts/inc2.sh"
-    xmonad $ defaultConfig {
-        manageHook = manageDocks <+> (isFullscreen --> doFullFloat) <+> manageHook defaultConfig
-        , layoutHook = avoidStruts $ smartBorders $ layoutHook defaultConfig
-        , logHook = dynamicLogWithPP xmobarPP
-            { ppOutput = hPutStrLn xmproc
-              , ppTitle = xmobarColor "green" "" . shorten 50
-            }
+    xmproc <- spawnPipe "xfce4-panel --restart" 
+    xmonad $ xfceConfig {
+	modMask = mod4Mask
+        , manageHook = manageDocks <+> (isFullscreen --> doFullFloat) <+> manageHook xfceConfig 
+        , layoutHook = avoidStruts $ smartBorders $ layoutHook xfceConfig
+	-- comment for fullscreen
         , handleEventHook = handleEventHook def <+> fullscreenEventHook
         , startupHook = startupHook def <+> setFullscreenSupported
         , normalBorderColor = "#000000"
         , focusedBorderColor = "#657583"
-        }`additionalKeys`
-        [((mod4Mask, xK_l), spawn "slock")
-        , ((mod4Mask, xK_p), spawn "/home/federico/hdmi.sh")
-        , ((0, xK_Print), spawn "scrot -q 1 /home/federico/Immagini/screen%Y-%m-%d-%H:%M:%S.png")
-        , ((mod4Mask, xK_t), spawn "$HOME/telegram")
-        ]
-        `additionalKeysP`
-        [("M-<F6>", spawn "$HOME/custom_scripts/inc2.sh")
-        , ("M-<F5>", spawn "$HOME/custom_scripts/dec2.sh")
-        , ("M-<F11>", lowerVolume 4 >> return())
-        , ("M-<F12>", raiseVolume 4 >> return())
-        , ("M-<F10>", toggleMute >> return())
-        , ("M-<F2>", spawn "$HOME/custom_scripts/nettogle.sh")
-        ]
+        }
 
 -- hack to let firefox fullscreen
 setFullscreenSupported :: X ()
