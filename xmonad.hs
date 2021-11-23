@@ -11,10 +11,10 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/federico/.xmobarrc"
-    xmproc <- spawnPipe "/usr/bin/xloadimage -onroot -fullscreen -zoom 82 $HOME/Immagini/debian.png"
+    xmproc <- spawnPipe "/usr/bin/xmobar $HOME/.xmobarrc"
     xmproc <- spawnPipe "$HOME/custom_scripts/inc2.sh"
-    xmonad $ defaultConfig {
+    xmproc <- spawnPipe "~/.fehbg &"
+    xmonad $ docks defaultConfig {
         manageHook = manageDocks <+> (isFullscreen --> doFullFloat) <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ smartBorders $ layoutHook defaultConfig
         , logHook = dynamicLogWithPP xmobarPP
@@ -25,10 +25,11 @@ main = do
         , startupHook = startupHook def <+> setFullscreenSupported
         , normalBorderColor = "#000000"
         , focusedBorderColor = "#657583"
+        , terminal="terminator"
         }`additionalKeys`
         [((mod4Mask, xK_l), spawn "slock")
-        , ((mod4Mask, xK_p), spawn "/home/federico/hdmi.sh")
-        , ((0, xK_Print), spawn "scrot -q 1 /home/federico/Immagini/screen%Y-%m-%d-%H:%M:%S.png")
+        , ((mod4Mask, xK_p), spawn "/home/fedeb/hdmi.sh")
+        , ((0, xK_Print), spawn "scrot -q 1 $HOME/Pictures/screen%Y-%m-%d-%H:%M:%S.png")
         , ((mod4Mask, xK_t), spawn "$HOME/telegram")
         ]
         `additionalKeysP`
