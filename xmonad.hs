@@ -25,7 +25,7 @@ main = do
         , startupHook = startupHook def <+> setFullscreenSupported
         , normalBorderColor = "#000000"
         , focusedBorderColor = "#657583"
-        , terminal="terminator"
+        , terminal="urxvt"
         }`additionalKeys`
         [((mod4Mask, xK_l), spawn "slock")
         , ((mod4Mask, xK_p), spawn "/home/fedeb/hdmi.sh")
